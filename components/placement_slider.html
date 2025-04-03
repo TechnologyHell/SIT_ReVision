@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Slider</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 110px; /* Space for the fixed navbar */
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: flex;
+            animation: marquee 15s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+        <!-- Placement Slider -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+            <div class="relative overflow-hidden">
+                <div class="marquee">
+                    <div class="marquee-content">
+                        <div class="bg-white shadow-md rounded-lg flex items-center p-6 w-96">
+                            <img src="images/candidates/1.jpeg" alt="Candidate 1" class="w-24 h-24 rounded-full mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Sweta Bhagat</h3>
+                                <p class="text-gray-700">Department: CSE</p>
+                                <p class="text-gray-700">Placed at: Amazon</p>
+                            </div>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg flex items-center p-6 w-96">
+                            <img src="images/candidates/2.jpeg" alt="Candidate 3" class="w-24 h-24 rounded-full mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Keshav Agarwal</h3>
+                                <p class="text-gray-700">Department: CSE</p>
+                                <p class="text-gray-700">Placed at: Informatica</p>
+                            </div>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg flex items-center p-6 w-96">
+                            <img src="images/candidates/3.jpeg" alt="Candidate 2" class="w-24 h-24 rounded-full mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Abhipsa Adhikary</h3>
+                                <p class="text-gray-700">Department: MCA</p>
+                                <p class="text-gray-700">Placed at: Amazon</p>
+                            </div>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg flex items-center p-6 w-96">
+                            <img src="images/candidates/4.jpeg" alt="Candidate 3" class="w-24 h-24 rounded-full mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Alok Kumar Sah</h3>
+                                <p class="text-gray-700">Department: CSE</p>
+                                <p class="text-gray-700">Placed at: Capgemini</p>
+                            </div>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg flex items-center p-6 w-96">
+                            <img src="images/candidates/5.jpeg" alt="Candidate 3" class="w-24 h-24 rounded-full mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Ruparna Datta</h3>
+                                <p class="text-gray-700">Department: ECE</p>
+                                <p class="text-gray-700">Placed at: ISRO</p>
+                            </div>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg flex items-center p-6 w-96">
+                            <img src="images/candidates/6.jpeg" alt="Candidate 3" class="w-24 h-24 rounded-full mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Ankita Prasad</h3>
+                                <p class="text-gray-700">Department: ECE</p>
+                                <p class="text-gray-700">Placed at: Capgemini</p>
+                            </div>
+                        </div>
+                        <!-- Add more placement cards as needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var marqueeContent = $('.marquee-content');
+            var clonedContent = marqueeContent.clone();
+            clonedContent.appendTo('.marquee');
+    
+            const style = document.createElement('style');
+            style.innerHTML = `
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-100%); }
+            }
+            .marquee {
+                display: flex;
+                overflow: hidden;
+            }
+            .marquee-content {
+                display: flex;
+                animation: marquee 30s linear infinite;
+            }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

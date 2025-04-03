@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .search-overlay {
+            backdrop-filter: blur(15px);
+        }
+        .search-box {
+            height: 168px;
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        .search-box.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #menu-toggle {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        #menu-toggle.open {
+            transform: rotate(90deg) scale(0.8);
+            opacity: 0.7;
+        }
+        .expandable-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid lightgrey;  /* Changed border color to light grey */
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .expandable-box:hover {
+            background-color: #f0f8ff;
+        }
+        .submenu {
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+        }
+        .submenu.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+        .plus-icon {
+            transition: transform 0.3s ease;
+        }
+        .plus-icon.open {
+            transform: rotate(45deg);
+        }
+        .menu-overlay {
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            background-color: rgba(255, 255, 255, 0.9);  /* 90% opaque background */
+        }
+        .menu-overlay.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .mobile-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);  /* 90% opaque background */
+            padding: 10px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: gray;
+            z-index: 10;
+        }
+        @media (min-width: 768px) {
+            .mobile-footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="relative">
+
+<header class="bg-white shadow-md fixed top-0 w-full z-50">    
+    <nav class="flex items-center justify-between px-4 md:px-40 h-[110px] relative">   
+        <!-- Left Section: 3 buttons-->
+        <div class="flex items-center gap-5">
+            <button id="menu-toggle" class="z-50 relative text-xl focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <button id="accountBtn" class="hidden md:block">
+                <img alt="" loading="lazy" src="svgs/user_icon.svg" class="nav_menu-icon">
+            </button>
+            <button id="searchToggle" class="hidden md:block">
+                <img alt="" loading="lazy" src="svgs/search_icon.svg" class="nav_menu-icon">
+            </button>
+        </div>
+
+        <!-- Center: Logo -->
+        <div class="absolute left-1/2 transform -translate-x-1/2">
+            <img src="images/logo_small.png" alt="Institute Logo" class="h-20">
+        </div>
+
+        <!-- Right Section: Apply Now -->
+        <div>
+            <a href="#" class="bg-yellow-300 text-black px-6 py-3 text-xl font-medium">
+                <span class="inline md:hidden">APPLY</span>  
+                <span class="hidden md:inline">APPLY NOW</span>  
+            </a>
+        </div>
+    </nav>
+</header>
+
+<!-- Mobile Menu -->
+<div id="menu-overlay" class="fixed top-[110px] left-0 w-full h-[calc(100vh-110px)] bg-white bg-opacity-90 z-40 p-6 md:hidden menu-overlay">
+    <ul id="mobile-menu" class="space-y-3 text-xl text-blue-900">
+        <!-- Updated Column 1 items with expandable boxes -->
+        <li>
+            <div class="expandable-box" data-section="about">
+                <span>About Us</span>
+                <svg class="plus-icon w-6 h-6 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M12 6v12" />
+                </svg>
+            </div>
+            <ul id="about-submenu" class="submenu pl-6 text-gray-700"></ul>
+        </li>
+
+        <li>
+            <div class="expandable-box" data-section="admissions">
+                <span>Admissions</span>
+                <svg class="plus-icon w-6 h-6 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M12 6v12" />
+                </svg>
+            </div>
+            <ul id="admissions-submenu" class="submenu pl-6 text-gray-700"></ul>
+        </li>
+
+        <li>
+            <div class="expandable-box" data-section="academics">
+                <span>Academics</span>
+                <svg class="plus-icon w-6 h-6 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M12 6v12" />
+                </svg>
+            </div>
+            <ul id="academics-submenu" class="submenu pl-6 text-gray-700"></ul>
+        </li>
+
+        <li>
+            <div class="expandable-box" data-section="studentlife">
+                <span>Student Life</span>
+                <svg class="plus-icon w-6 h-6 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M12 6v12" />
+                </svg>
+            </div>
+            <ul id="studentlife-submenu" class="submenu pl-6 text-gray-700"></ul>
+        </li>
+
+        <li>
+            <div class="expandable-box" data-section="placements">
+                <span>Placements & Careers</span>
+                <svg class="plus-icon w-6 h-6 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M12 6v12" />
+                </svg>
+            </div>
+            <ul id="placements-submenu" class="submenu pl-6 text-gray-700"></ul>
+        </li>
+
+        <li>
+            <div class="expandable-box" data-section="news">
+                <span>News & Events</span>
+                <svg class="plus-icon w-6 h-6 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M12 6v12" />
+                </svg>
+            </div>
+            <ul id="news-submenu" class="submenu pl-6 text-gray-700"></ul>
+        </li>
+
+        <!-- Quick Links (Expandable) -->
+        <li>
+            <div class="expandable-box" data-section="quicklinks">
+                <span>Quick Links</span>
+                <svg class="plus-icon w-6 h-6 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M12 6v12" />
+                </svg>
+            </div>
+            <ul id="quicklinks-submenu" class="submenu pl-6 text-gray-700"></ul>
+        </li>
+    </ul>
+    <!-- Footer for Mobile Menu -->
+    <div id="mobile-footer" class="mobile-footer">
+        <p>Siliguri Institute of Technology</p>
+        <p>Hill Cart Road, Salbari, Siliguri · 0353-2778002 · info@sittechno.org</p>
+    </div>
+</div>
+
+<!-- Desktop Menu -->
+<div id="desktop-menu-overlay" class="fixed top-[110px] left-0 w-full h-[calc(100vh-60px)] bg-white bg-opacity-90 hidden z-40 px-4 md:px-40">
+    <div class="p-6 grid grid-cols-3 gap-4 relative h-full">
+        
+        <!-- Full-Height Vertical Lines -->
+        <div class="absolute top-0 left-1/3 h-full w-px bg-gray-300"></div>  <!-- Line between Col 1 & 2 -->
+        <div class="absolute top-0 left-2/3 h-full w-px bg-gray-300"></div>  <!-- Line between Col 2 & 3 -->
+
+        <!-- Row 1, Col 1: Section List -->
+        <div class="pr-4">
+            <h2 class="text-base font-light text-blue-900">Sections</h2> <!-- Smaller, thinner title -->
+            <ul id="sections-list" class="mt-4 space-y-4 text-xl"> <!-- Uniform spacing (space-y-4) -->
+                <li class="cursor-pointer text-blue-900 hover:text-red-700 active:text-red-800" data-section="about">About Us</li>
+                <li class="cursor-pointer text-blue-900 hover:text-red-700 active:text-red-800" data-section="admissions">Admissions</li>
+                <li class="cursor-pointer text-blue-900 hover:text-red-700 active:text-red-800" data-section="academics">Academics</li>
+                <li class="cursor-pointer text-blue-900 hover:text-red-700 active:text-red-800" data-section="studentlife">Student Life</li>
+                <li class="cursor-pointer text-blue-900 hover:text-red-700 active:text-red-800" data-section="placements">Placements & Careers</li>
+                <li class="cursor-pointer text-blue-900 hover:text-red-700 active:text-red-800" data-section="news">News & Events</li>
+        
+                <div class="pt-8 space-y-2">
+                    <li class="text-sm cursor-pointer text-blue-900 hover:text-black" >Contact</li>
+                    <li class="text-sm cursor-pointer text-blue-900 hover:text-black" >Employment Opportunities</li>
+                </div>
+            </ul>
+        </div>
+        
+
+        <!-- Row 1, Col 2: Active Section -->
+        <div class="pl-4">
+            <h2 id="active-section-title" class="text-base font-light text-blue-900">About Us</h2>
+            <ul id="section-content" class="mt-4 space-y-4 text-xl text-blue-800"> <!-- SAME spacing as Col 1 (space-y-4) -->
+            </ul>
+        </div>
+        
+
+        <!-- Row 1, Col 3: Quick Links -->
+        <div class="pl-4">
+            <h2 class="text-base font-light text-gray-700">Quick Links</h2> <!-- Smaller, thinner title -->
+            <ul class="mt-4 space-y-4 text-xl text-gray-700"> <!-- SAME spacing as Col 1 and Col 2 -->
+                <li class="cursor-pointer hover:text-black">Student Login</li>
+                <li class="cursor-pointer hover:text-black">Faculty Login</li>
+                <li class="cursor-pointer hover:text-black">Library</li>
+                <li class="cursor-pointer hover:text-black">Online Payments</li>
+                <li class="cursor-pointer hover:text-black">Contact & Help</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Thin Separator Line Above Row 2 -->
+    <div class="border-t border-gray-300 w-full fixed bottom-0 bg-white">
+        <div class="flex justify-start items-center w-full px-6 py-3">
+            
+            <!-- Row 2, Col 1: Social Icons -->
+            <div class="flex space-x-4">
+                <button class="p-2">
+                    <img src="svgs/social-x.svg" alt="Twitter" class="h-6 w-6">
+                </button>
+                <button class="p-2">
+                    <img src="svgs/social-lin.svg" alt="LinkedIn" class="h-6 w-6">
+                </button>
+                <button class="p-2">
+                    <img src="svgs/social-yt.svg" alt="YouTube" class="h-6 w-6">
+                </button>
+                <button class="p-2">
+                    <img src="svgs/social-fb.svg" alt="Facebook" class="h-6 w-6">
+                </button>
+                <button class="p-2">
+                    <img src="svgs/social-ig.svg" alt="Instagram" class="h-6 w-6">
+                </button>
+            </div>
+
+            <!-- Row 2, Col 2: College Address & Details -->
+            <div class="text-sm text-gray-700 ml-10">
+                <strong>Siliguri Institute of Technology</strong> · Hill Cart Road, Salbari, Siliguri · 
+                0353-2778002 · info@sittechno.org
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search Box Overlay -->
+<div id="searchOverlay" class="fixed left-0 w-full hidden flex flex-col items-center justify-start search-overlay z-40 top-[110px]">
+    <div id="searchBox" class="bg-white bg-opacity-90 w-full h-[118px] flex flex-col items-center justify-center search-box">
+        <div class="w-1/3 relative border-b-2 border-gray-400">
+            <input id="searchInput" type="text" placeholder="Search Here..." class="w-full p-2 text-xl border-none outline-none bg-transparent">
+            <img src="svgs/search_icon.svg" alt="Search" class="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer" id="searchButton">
+            <button id="closeSearch" class="absolute top-[-20px] right-[-30px]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600 hover:text-gray-800">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+  
+
+
+<script>
+    const menuToggle = document.getElementById("menu-toggle");
+    const menuOverlay = document.getElementById("menu-overlay");
+    const desktopMenuOverlay = document.getElementById("desktop-menu-overlay");
+    const mobileFooter = document.getElementById("mobile-footer");
+    let isMenuOpen = false;
+
+    const sectionData = {
+        about: ["Overview", "Vision & Mission", "Institute Leadership", "Accreditations & Rankings", "Campus Facilities", "Research & Innovation", "Governance & Policies", "Contact & Location"],
+        admissions: ["Why Choose SIT?", "Courses Offered", "Admission Process", "Eligibility Criteria", "Fees & Scholarships", "Important Dates", "International Admissions", "Download Prospectus", "FAQs"],
+        academics: ["Departments & Programs", "Faculty Directory", "Academic Calendar", "Curriculum & Syllabus", "Examinations & Results", "Student Support Services", "Research & Publications", "E-Learning Portal"],
+        studentlife: ["Clubs & Societies", "Events & Fests", "Sports & Athletics", "Hostel & Accommodation", "Cafeteria & Food Services", "Student Council", "Anti-Ragging Cell", "Alumni Network"],
+        placements: ["Placement Overview", "Top Recruiters", "Placement Statistics", "Internships", "Skill Development Programs", "Resume & Interview Prep", "Career Guidance Cell", "Entrepreneurship & Startups"],
+        news: ["Latest News", "Announcements", "Upcoming Events", "Media Coverage", "Press Releases", "Student Achievements", "Awards & Recognitions"],
+        quicklinks: ["Online Learning", "Library", "Campus Map", "Alumni", "Student Portal", "Faculty Portal"],
+    };
+
+    function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        if (window.innerWidth >= 768) {
+            desktopMenuOverlay.classList.toggle("hidden");
+            if (isMenuOpen) {
+                desktopMenuOverlay.style.transform = "translateY(0)";
+                desktopMenuOverlay.style.opacity = "1";
+            } else {
+                desktopMenuOverlay.style.transform = "translateY(-100%)";
+                desktopMenuOverlay.style.opacity = "0";
+            }
+        } else {
+            menuOverlay.classList.toggle("active");
+            if (isMenuOpen) {
+                menuOverlay.style.transform = "translateY(0)";
+                menuOverlay.style.opacity = "1";
+                mobileFooter.classList.remove("hidden");
+            } else {
+                menuOverlay.style.transform = "translateY(-100%)";
+                menuOverlay.style.opacity = "0";
+                mobileFooter.classList.add("hidden");
+            }
+        }
+        menuToggle.classList.toggle("open");
+        const icon = menuToggle.querySelector("svg");
+
+        if (isMenuOpen) {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/>';
+            icon.setAttribute("width", "5");
+            icon.setAttribute("height", "5");
+        } else {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>';
+            icon.setAttribute("width", "10");
+            icon.setAttribute("height", "10");
+        }
+    }
+
+    menuToggle.addEventListener("click", toggleMenu);
+
+    document.querySelectorAll(".expandable-box").forEach((box) => {
+        box.addEventListener("click", () => {
+            const section = box.dataset.section;
+            const submenu = document.getElementById(`${section}-submenu`);
+            const plusIcon = box.querySelector(".plus-icon");
+
+            // Close all other submenus
+            document.querySelectorAll(".submenu").forEach((el) => {
+                if (el !== submenu) {
+                    el.classList.remove("active");
+                    el.previousElementSibling.querySelector(".plus-icon").classList.remove("open");
+                }
+            });
+
+            if (submenu.innerHTML === "") {
+                submenu.innerHTML = sectionData[section]
+                    .map((subItem) => `<li class='py-1 cursor-pointer hover:text-red-700'>${subItem}</li>`)
+                    .join("");
+            }
+
+            submenu.classList.toggle("active");
+            plusIcon.classList.toggle("open");
+        });
+    });
+
+    const sectionsList = document.getElementById("sections-list");
+    const sectionContent = document.getElementById("section-content");
+    const activeSectionTitle = document.getElementById("active-section-title");
+
+    function updateSectionContent(section) {
+        document.querySelectorAll("#sections-list li").forEach(li => {
+            li.classList.remove("text-red-800");
+        });
+
+        const activeItem = document.querySelector(`[data-section='${section}']`);
+        if (activeItem) {
+            activeItem.classList.add("text-red-800");
+        }
+
+        activeSectionTitle.textContent = activeItem.textContent;
+        sectionContent.innerHTML = sectionData[section]
+            .map(item => `<li class='py-1 cursor-pointer hover:text-red-700'>${item}</li>`)
+            .join('');
+    }
+
+    sectionsList.addEventListener("click", (event) => {
+        if (event.target.dataset.section) {
+            updateSectionContent(event.target.dataset.section);
+        }
+    });
+
+    updateSectionContent("about");
+
+    const searchToggle = document.getElementById("searchToggle");
+    const searchOverlay = document.getElementById("searchOverlay");
+    const searchBox = document.getElementById("searchBox");
+    const searchInput = document.getElementById("searchInput");
+    const closeSearch = document.getElementById("closeSearch");
+    const searchButton = document.getElementById("searchButton");
+
+    function toggleSearchBox() {
+        if (searchOverlay.classList.contains("hidden")) {
+            searchOverlay.classList.remove("hidden");
+            setTimeout(() => {
+                searchBox.classList.add("active");
+                searchInput.focus();
+            }, 10);
+        } else {
+            closeSearchBox();
+        }
+    }
+
+    function closeSearchBox() {
+        searchBox.classList.remove("active");
+        setTimeout(() => searchOverlay.classList.add("hidden"), 300);
+    }
+
+    searchToggle.addEventListener("click", toggleSearchBox);
+    closeSearch.addEventListener("click", closeSearchBox);
+
+    searchOverlay.addEventListener("click", (event) => {
+        if (!searchBox.contains(event.target)) closeSearchBox();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeSearchBox();
+        if (event.key === "Enter") alert("Searching: " + searchInput.value);
+    });
+
+    searchButton.addEventListener("click", () => {
+        alert("Searching: " + searchInput.value);
+    });
+</script>
+</body>
+</html>
