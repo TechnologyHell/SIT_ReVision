@@ -10,7 +10,7 @@ import PlacementSlider from "./sections/PlacementSlider";
 import ImageCarousel from "./sections/Awards";
 import SearchOverlay from "./sections/searchOverlay";
 import Footer from "./sections/Footer";
-
+import Gallery from "./sections/Gallery"
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -48,6 +48,7 @@ const App = () => {
       <PlacementSlider />
       <ImageCarousel />
       <Footer/>
+      <Gallery/>
     </div>
   );
 };
