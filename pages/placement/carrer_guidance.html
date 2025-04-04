@@ -3,9 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Placement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styling for background image */
+        .bg-cover {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .dark-overlay {
+            background: rgba(0, 0, 0, 0.8); /* 90% opacity */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 48px; /* 75% of the original height (64px) */
+            }
+        }
+    </style>
 </head>
 <body>
-    
+
+<header class="header relative w-full h-64 bg-cover" style="background-image: url('../images/carousel-1.jpg');">
+    <div class="absolute inset-0 dark-overlay flex flex-col items-center justify-center text-white">
+        <h1 class="text-3xl md:text-5xl font-bold">ABOUT</h1>
+        <p class="mt-5 text-xs md:text-sm text-yellow-500">Pages /Placement</p>
+    </div>
+</header>
+
+
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="text-center mb-20">
+      <h1 class="sm:text-3xl text-2xl font-extrabold text-center title-font text-gray-900 mb-4">Raw Denim Heirloom Man Braid</h1>
+      <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug.</p>
+    </div>
+  </div>
+</section>
+
+
+
+
 </body>
 </html>
