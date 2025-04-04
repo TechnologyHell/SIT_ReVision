@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Buttons</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .button-overlay {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.2s;
+        }
+        .button-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 0.5rem;
+        }
+        .button-overlay:hover {
+            transform: scale(1.05);
+        }
+        .button-overlay span {
+            position: relative;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        .button-overlay span .college-code {
+            display: block;
+            font-size: 0.875rem; /* Small text size */
+            color: rgb(255, 255, 255); /* Light grey color */
+        }
+        span {
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-white flex justify-center items-center min-h-screen">
+    <div class="gallery grid gap-4 p-5 w-full sm:w-4/5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+        <a href="c1.html" class="button-overlay rounded-lg h-40 sm:h-48" style="background-image: url('images/home/c1.jpg');">
+            <span>College of Engineering & Management <span class="college-code">(College Code - 119)</span></span>
+        </a>
+        <a href="c2.html" class="button-overlay rounded-lg h-40 sm:h-48" style="background-image: url('images/home/c2.jpg');">
+            <span>College of Professional Studies <span class="college-code">(College Code - 334)</span></span>
+        </a>
+        <a href="c3.html" class="button-overlay rounded-lg h-40 sm:h-48" style="background-image: url('images/home/c3.jpg');">
+            <span>College of Hotel Management <span class="college-code">(College Code - 335)</span></span>
+        </a>
+        <a href="c4.html" class="button-overlay rounded-lg h-40 sm:h-48" style="background-image: url('images/home/c4.jpg');">
+            <span>College of Computer Application <span class="college-code">(College Code - 336)</span></span>
+        </a>
+        <a href="c5.html" class="button-overlay rounded-lg h-40 sm:h-48 sm:col-span-2 sm:mx-auto lg:col-span-1" style="background-image: url('images/home/c5.jpg');">
+            <span>SIT Diploma College</span>
+        </a>
+    </div>
+</body>
+</html>
