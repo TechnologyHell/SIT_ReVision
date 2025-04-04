@@ -144,4 +144,85 @@ const fetchCounts = async (req, res) => {
   }
 };
 
-module.exports = { register, login, fetchCounts };
+const searchItems = async (req, res) => {
+  const query = req.query.q;  // Get the search query from the URL query parameters
+
+  if (!query) {
+    return res.status(400).send('Search query is required');
+  }
+
+  // Define individual queries for each type of content
+  const eventQuery = `
+    SELECT 
+        event_id AS id, 
+        event_name AS title, 
+        description AS content, 
+        'Event' AS type,
+        image 
+    FROM Events
+    WHERE event_name LIKE ? OR description LIKE ?`;
+
+  const newsQuery = `
+    SELECT 
+        news_id AS id, 
+        title, 
+        content, 
+        'News' AS type,
+        image 
+    FROM News
+    WHERE title LIKE ? OR content LIKE ?`;
+
+  const announcementQuery = `
+    SELECT 
+        announcement_id AS id, 
+        title, 
+        content, 
+        'Announcement' AS type,
+        document AS image 
+    FROM Announcements
+    WHERE title LIKE ? OR content LIKE ?`;
+
+  const teachingStaffQuery = `
+    SELECT 
+        id, 
+        faculty_name AS title, 
+        designation AS content, 
+        'Teaching Staff' AS type,
+        photo_url AS image 
+    FROM Teaching_Staff
+    WHERE faculty_name LIKE ? OR designation LIKE ?`;
+
+  const nonTeachingStaffQuery = `
+    SELECT 
+        id, 
+        staff_name AS title, 
+        designation AS content, 
+        'Non-Teaching Staff' AS type,
+        NULL AS image  
+    FROM Non_Teaching_Staff
+    WHERE staff_name LIKE ? OR designation LIKE ?`;
+
+  try {
+    // Execute each query asynchronously using await
+    const [events] = await db.query(eventQuery, [`%${query}%`, `%${query}%`]);
+    const [news] = await db.query(newsQuery, [`%${query}%`, `%${query}%`]);
+    const [announcements] = await db.query(announcementQuery, [`%${query}%`, `%${query}%`]);
+    const [teachingStaff] = await db.query(teachingStaffQuery, [`%${query}%`, `%${query}%`]);
+    const [nonTeachingStaff] = await db.query(nonTeachingStaffQuery, [`%${query}%`, `%${query}%`]);
+
+    // Return the results grouped by type
+    res.json({
+      events,
+      news,
+      announcements,
+      teachingStaff,
+      nonTeachingStaff
+    });
+
+  } catch (err) {
+    console.error('Error fetching search results:', err);
+    res.status(500).send('Error fetching search results');
+  }
+};
+
+module.exports = { register, login, fetchCounts,searchItems };
