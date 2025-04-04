@@ -1,0 +1,27 @@
+@import "tailwindcss";
+.search-overlay {
+  transform: translateY(-100%); /* Initial state: hidden above the viewport */
+  opacity: 0; /* Initial state: fully transparent */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Smooth slide and fade effect */
+}
+
+.search-overlay.translate-y-0 {
+  transform: translateY(0); /* Final state: visible */
+  opacity: 1; /* Final state: fully visible */
+
+}
+button{
+  cursor: pointer;
+}
+/*mobile footer*/
+.mobile-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);  /* 90% opaque background */
+  padding: 10px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: gray;
+  z-index: 10;
+}
