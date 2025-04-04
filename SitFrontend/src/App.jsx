@@ -10,7 +10,7 @@ import PlacementSlider from "./sections/PlacementSlider";
 import ImageCarousel from "./sections/Awards";
 import SearchOverlay from "./sections/searchOverlay";
 import Footer from "./sections/Footer";
-import Gallery from "./sections/Gallery"
+import Highlight from "./sections/Highlight.jsx";
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -46,9 +46,9 @@ const App = () => {
       <Quotes />
       <HeroSection />
       <PlacementSlider />
-      <ImageCarousel />
+      <ImageCarousel/>
+      <Highlight/>
       <Footer/>
-      <Gallery/>
     </div>
   );
 };
