@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Baskerville:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import "tailwindcss";
+
+:root {
+    --bg: #f3f4f6;
+    --text-hero1: #4a5565;
+    --text-hero2: ##eff6ff;
+    --text-quote1:#1e2939;
+    --text-quote2:#4a5565;
+    --placement-bg:white;
+    --placement-text:black;
+    --footer-bg:#eff6ff;
+    --footer-text:#4a5565;
+    --footer-text2:#101828;
+    --navbar-bg:white;
+    --navbar-text:black;
+    --nav-texts:'';
+    --nav-foot-text:#364153;
+    --nav-menu-text:#1c398e;
+    --nav-side-menu-hover:black;
+}
+
+/* Dark theme */
+.dark-theme {
+    --bg: #002244;
+    --text-hero1: #f3f4f6;
+    --text-hero2: #FCFBFB;
+    --text-quote1:#e5e7eb;
+    --text-quote2:#F5FEFD;
+    --placement-bg:black;
+    --placement-text:white;
+    --footer-bg:#00274d;
+    --footer-text:white;
+    --footer-text2:#e5e7eb;
+    --navbar-bg:#001a33;
+    --navbar-text:white;
+    --nav-foot-text:#e5e7eb;
+    --nav-menu-text:white;
+    --nav-side-menu-hover:white;
+}

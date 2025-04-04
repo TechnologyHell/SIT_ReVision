@@ -1,0 +1,188 @@
+/* Hide the number input arrows in Webkit-based browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the number input arrows in Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* CSS to hide scrollbars but allow scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
+  scrollbar-width: none;
+  /* For Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Opera */
+}
+
+.background {
+  animation: bganimate 15s linear infinite;
+  background: linear-gradient(45deg, #D9D9D9, #0f1f74);
+  background-size: 400% 400%;
+}
+
+.search-overlay {
+  transform: translateY(-100%); /* Initial state: hidden above the viewport */
+  opacity: 0; /* Initial state: fully transparent */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Smooth slide and fade effect */
+}
+
+.search-overlay.translate-y-0 {
+  transform: translateY(0); /* Final state: visible */
+  opacity: 1; /* Final state: fully visible */
+
+}
+button{
+  cursor: pointer;
+}
+/*mobile footer*/
+.mobile-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);  /* 90% opaque background */
+  padding: 10px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: gray;
+  z-index: 10;
+}
+
+@keyframes bganimate {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.contact-us {
+  font-family: inherit;
+  font-size: 20px;
+  background: royalblue;
+  color: white;
+  padding: 0.5em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.contact-us span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+}
+
+.contact-us svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.contact-us:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.contact-us:hover svg {
+  transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.contact-us:hover span {
+  transform: translateX(10em);
+}
+
+.contact-us:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
+}
+
+
+/* From Uiverse.io by 0x-Sarthak */ 
+.cta {
+  position: fixed;
+  margin: auto;
+  padding: 11.5px 18px;
+  transition: all 0.2s ease;
+  border: 3px solid #552da8;
+  border-radius: 50px;
+  background: #552da8;
+  cursor: pointer;
+}
+
+.cta:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  border-radius: 50px;
+  background: white;
+  width: 45px;
+  height: 45px;
+  transition: all 0.8s ease;
+}
+
+.cta span {
+  position: relative;
+  font-family: Montserrat;
+  font-size: 18px;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+.cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: white;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.5s ease;
+}
+
+.cta:hover:before {
+  width: 100%;
+  background: #1c1c1c;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+  transition: all 2s ease;
+}
+
+.cta:active {
+  transform: scale(0.95);
+  transition: all 2s ease;
+}
