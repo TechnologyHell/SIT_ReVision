@@ -15,6 +15,9 @@ import Home from "./pages/Home";
 import ContactUs from './pages/ContactUs';
 import Faculty from './pages/Faculty';
 import Search from './pages/Search';
+import Gallery from './pages/Gallery';
+import UserEvents from "./pages/Events";
+import UserEvent from "./pages/Event";
 
 import Dashboard from './pages/admin/Dashboard';
 import Events from './pages/admin/Events';
@@ -42,8 +45,10 @@ const App = () => {
 
         <Route path="/faculty" element={<Faculty />} />
         <Route path='/contact-us' element=<ContactUs /> />
-        <Route path='/search' element=<Search /> />
-        <Route path='/events' element=<Search /> />
+        <Route path='/search' element={<Search />} />
+        <Route path='/gallery' element={<Gallery />} />
+        <Route path='/events' element={<UserEvents />} />
+        <Route path='/events/:eventId' element={<UserEvent />} />
 
         {/* If the user is logged in, redirect to the dashboard, else show the login page */}
         <Route path="/login" element={isLoggedIn ? <Navigate to="/admin/dashboard" /> : <LoginForm />} />
@@ -64,7 +69,7 @@ const App = () => {
         <Route path="/admin/contacts" element={<PrivateRoute element={<Contact />} />} />
 
         {/* Catch-all route for unknown paths */}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </Router>
   );

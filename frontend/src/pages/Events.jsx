@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { FaPlus } from "react-icons/fa";
-import EventList from "../../components/admin/Events/EventList";
+import EventList from "../components/Events/EventList";
 const Events = () => {
     useEffect(() => {
         document.title = "SIT | Events";
@@ -61,7 +60,7 @@ const Events = () => {
                         type="text"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className={`px-4 py-2 rounded-2xl w-full outline-none bg-white`}
+                        className={`px-4 py-2 rounded-2xl w-full border outline-none bg-white`}
                         placeholder="Search"
                     />
                     <CiSearch className={`text-2xl absolute right-0 top-1/2 -translate-1/2`} />
@@ -70,7 +69,7 @@ const Events = () => {
             <div className="flex md:hidden relative w-[100%] mt-5">
                 <input
                     type="text"
-                    className={`px-4 py-2 rounded-2xl w-full outline-none bg-white`}
+                    className={`px-4 py-2 rounded-2xl w-full border outline-none bg-white`}
                     placeholder="Search"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}

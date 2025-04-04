@@ -8,6 +8,7 @@ import HeroSection from "./HeroSection";
 import PlacementSlider from "./PlacementSlider";
 import ImageCarousel from "./Awards";
 import SearchOverlay from "./searchOverlay";
+import Highlight from "./Highlight";
 import Footer from "./Footer";
 
 const Home = () => {
@@ -46,6 +47,7 @@ const Home = () => {
       <HeroSection />
       <PlacementSlider />
       <ImageCarousel />
+      <Highlight />
       <Footer />
     </div>
   );

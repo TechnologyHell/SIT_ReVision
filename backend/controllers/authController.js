@@ -133,7 +133,7 @@ const fetchCounts = async (req, res) => {
       total_upcoming,
       total_events: total_ongoing + total_past + total_upcoming,
       total_news,
-      total_announcements,  
+      total_announcements,
       total_teachings,
       total_non_teachings,
       total_new_contacts
@@ -151,6 +151,20 @@ const searchItems = async (req, res) => {
     return res.status(400).send('Search query is required');
   }
 
+  // Map related keywords to tables
+  const tableKeywords = {
+    events: ['event', 'events', 'occasion', 'function'],
+    news: ['news', 'article', 'story', 'announcement'],
+    announcements: ['announcement', 'announcements', 'notification', 'update'],
+    teachingStaff: ['faculty', 'teacher', 'professor', 'staff'],
+    nonTeachingStaff: ['staff', 'administrator', 'employee', 'non-teaching']
+  };
+
+  // Function to check if the query matches any related keyword
+  const isKeywordMatch = (keywords) => {
+    return keywords.some(keyword => query.toLowerCase().includes(keyword.toLowerCase()));
+  };
+
   // Define individual queries for each type of content
   const eventQuery = `
     SELECT 
@@ -160,7 +174,8 @@ const searchItems = async (req, res) => {
         'Event' AS type,
         image 
     FROM Events
-    WHERE event_name LIKE ? OR description LIKE ?`;
+    ${isKeywordMatch(tableKeywords.events) ? '' : 'WHERE event_name LIKE ? OR description LIKE ?'}
+  `;
 
   const newsQuery = `
     SELECT 
@@ -170,7 +185,8 @@ const searchItems = async (req, res) => {
         'News' AS type,
         image 
     FROM News
-    WHERE title LIKE ? OR content LIKE ?`;
+    ${isKeywordMatch(tableKeywords.news) ? '' : 'WHERE title LIKE ? OR content LIKE ?'}
+  `;
 
   const announcementQuery = `
     SELECT 
@@ -180,7 +196,8 @@ const searchItems = async (req, res) => {
         'Announcement' AS type,
         document AS image 
     FROM Announcements
-    WHERE title LIKE ? OR content LIKE ?`;
+    ${isKeywordMatch(tableKeywords.announcements) ? '' : 'WHERE title LIKE ? OR content LIKE ?'}
+  `;
 
   const teachingStaffQuery = `
     SELECT 
@@ -190,7 +207,8 @@ const searchItems = async (req, res) => {
         'Teaching Staff' AS type,
         photo_url AS image 
     FROM Teaching_Staff
-    WHERE faculty_name LIKE ? OR designation LIKE ?`;
+    ${isKeywordMatch(tableKeywords.teachingStaff) ? '' : 'WHERE faculty_name LIKE ? OR designation LIKE ? OR department_name LIKE ?'}
+  `;
 
   const nonTeachingStaffQuery = `
     SELECT 
@@ -200,15 +218,16 @@ const searchItems = async (req, res) => {
         'Non-Teaching Staff' AS type,
         NULL AS image  
     FROM Non_Teaching_Staff
-    WHERE staff_name LIKE ? OR designation LIKE ?`;
+    ${isKeywordMatch(tableKeywords.nonTeachingStaff) ? '' : 'WHERE staff_name LIKE ? OR designation LIKE ? OR department_name LIKE ?'}
+  `;
 
   try {
     // Execute each query asynchronously using await
     const [events] = await db.query(eventQuery, [`%${query}%`, `%${query}%`]);
     const [news] = await db.query(newsQuery, [`%${query}%`, `%${query}%`]);
     const [announcements] = await db.query(announcementQuery, [`%${query}%`, `%${query}%`]);
-    const [teachingStaff] = await db.query(teachingStaffQuery, [`%${query}%`, `%${query}%`]);
-    const [nonTeachingStaff] = await db.query(nonTeachingStaffQuery, [`%${query}%`, `%${query}%`]);
+    const [teachingStaff] = await db.query(teachingStaffQuery, [`%${query}%`, `%${query}%`, `%${query}%`]);
+    const [nonTeachingStaff] = await db.query(nonTeachingStaffQuery, [`%${query}%`, `%${query}%`, `%${query}%`]);
 
     // Return the results grouped by type
     res.json({
@@ -225,4 +244,4 @@ const searchItems = async (req, res) => {
   }
 };
 
-module.exports = { register, login, fetchCounts,searchItems };
+module.exports = { register, login, fetchCounts, searchItems };

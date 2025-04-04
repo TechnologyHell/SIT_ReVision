@@ -13,11 +13,12 @@ import h4 from "/home/h4.jpg";
 import h5 from "/home/h5.jpg";
 import h6 from "/home/h6.jpg";
 import h7 from "/home/h7.jpg";
+import h8 from "/home/h8.jpg";
 // Import icons
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // Image array
-const images = [h1, h3, h5, h2, h4, h6, h7];
+const images = [h1, h3, h5, h2, h4, h6, h7,h8];
 
 export default function ImageCarousel() {
   const sliderRef = useRef(null);

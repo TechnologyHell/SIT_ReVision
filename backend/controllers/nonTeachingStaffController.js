@@ -73,8 +73,8 @@ const getNonTeachingStaff = async (req, res) => {
         // Apply search filter using LIKE
         if (search) {
             query += department ? ' AND' : ' WHERE'; // Ensure correct SQL syntax
-            query += ' (staff_name LIKE ? OR email LIKE ?)';
-            values.push(`%${search}%`, `%${search}%`);
+            query += ' (staff_name LIKE ? OR email LIKE ? OR designation LIKE ? OR department_name LIKE ?)';
+            values.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
         }
 
         query += ' ORDER BY department_name'; // Sorting

@@ -31,7 +31,7 @@ const createTeachingStaff = async (req, res) => {
 const editTeachingStaff = async (req, res) => {
     try {
         const { id } = req.params;
-        const { department_name, department_code, faculty_name, designation, email, degrees,photoUrl } = req.body;
+        const { department_name, department_code, faculty_name, designation, email, degrees, photoUrl } = req.body;
 
         let photoPath = photoUrl || '';
         if (req.file) {
@@ -89,9 +89,9 @@ const getTeachingStaff = async (req, res) => {
         // Apply search filter if provided
         if (search) {
             query += department ? ` AND` : ` WHERE`; // Ensure proper query structure
-            query += ` (LOWER(faculty_name) LIKE ? OR email LIKE ?)`;
+            query += ` (LOWER(faculty_name) LIKE ? OR email LIKE ? OR designation LIKE ? OR department_name LIKE ?)`;
             const searchTerm = `%${search.toLowerCase()}%`;
-            queryParams.push(searchTerm,searchTerm);
+            queryParams.push(searchTerm, searchTerm, searchTerm, searchTerm);
         }
 
         // Execute query
